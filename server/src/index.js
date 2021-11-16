@@ -2,7 +2,7 @@ import { app } from "./app.js";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import mongoose from "mongoose";
-import chatModel from "./chat-room/schema.js";
+import messageModel from "./chat-room/schema/message.js";
 import list from "express-list-endpoints";
 const port = process.env.PORT || 3001;
 const server = createServer(app);
@@ -25,11 +25,10 @@ io.on("connection", (socket) => {
   socket.on("send_message", (data) => {
     socket.to(data.room).emit("receive_message", data);
 
-    const chatHistory = new chatModel({
+    const chatHistory = new messageModel({
       roomId: data.room,
-      username: data.author,
+      sender: data.author,
       message: data.message,
-      time: data.time,
     });
     chatHistory.save();
     console.log("message:", data);
