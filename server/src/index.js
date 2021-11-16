@@ -3,6 +3,7 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import mongoose from "mongoose";
 import chatModel from "./chat-room/schema.js";
+import list from "express-list-endpoints";
 const port = process.env.PORT || 3001;
 const server = createServer(app);
 
@@ -42,6 +43,7 @@ mongoose.connect(process.env.MONGO_URL);
 mongoose.connection.on("connected", () => {
   console.log("database connected");
   server.listen(port, () => {
+    console.table(list(app));
     console.log(`running on ${port}`);
   });
 });
