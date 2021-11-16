@@ -1,8 +1,9 @@
 import { app } from "./app.js";
 import { createServer } from "http";
 import { Server } from "socket.io";
-
-const port = 3001;
+import mongoose from "mongoose";
+import chatModel from "./chat-room/schema.js";
+const port = process.env.PORT || 3001;
 const server = createServer(app);
 
 const io = new Server(server, {
@@ -17,17 +18,30 @@ io.on("connection", (socket) => {
 
   socket.on("join_room", (roomId, username) => {
     socket.join(roomId);
+
     console.log(`userName with ${username} joined room:${roomId}`);
   });
   socket.on("send_message", (data) => {
     socket.to(data.room).emit("receive_message", data);
+
+    const chatHistory = new chatModel({
+      roomId: data.room,
+      username: data.author,
+      message: data.message,
+      time: data.time,
+    });
+    chatHistory.save();
     console.log("message:", data);
   });
   socket.on("disconnect", () => {
     console.log("user disconnected", socket.id);
   });
 });
+mongoose.connect(process.env.MONGO_URL);
 
-server.listen(port, () => {
-  console.log(`running on ${port}`);
+mongoose.connection.on("connected", () => {
+  console.log("database connected");
+  server.listen(port, () => {
+    console.log(`running on ${port}`);
+  });
 });
