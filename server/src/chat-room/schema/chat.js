@@ -1,14 +1,13 @@
 import mongoose from "mongoose";
-import { messageSchema } from "./message";
-import { userSchema } from "../../users/schema";
+import { messageSchema } from "./message.js";
+// import { userSchema } from "../../users/schema";
 const { model, Schema } = mongoose;
 
 const chatSchema = new Schema({
-  members: {
-    type: [userSchema],
-    required: true,
-    default: [],
-  },
+  roomName: { type: String, required: true },
+
+  users: [{ type: mongoose.ObjectId, ref: "user", required: true }],
+
   history: {
     type: [messageSchema],
     required: true,

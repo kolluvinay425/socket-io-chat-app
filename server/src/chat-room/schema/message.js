@@ -4,12 +4,13 @@ const { model, Schema } = mongoose;
 
 export const messageSchema = new Schema(
   {
-    roomId: {
-      type: String,
-      required: true,
-    },
+    // roomId: {
+    //   type: String,
+    //   required: true,
+    // },
     sender: {
-      type: String,
+      type: mongoose.ObjectId,
+      ref: "user",
       required: true,
     },
     message: {
