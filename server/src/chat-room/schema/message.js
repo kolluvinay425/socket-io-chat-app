@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import userModel from "../../users/schema.js";
 const { model, Schema } = mongoose;
 
-const messageSchema = new Schema(
+export const messageSchema = new Schema(
   {
     roomId: {
       type: String,

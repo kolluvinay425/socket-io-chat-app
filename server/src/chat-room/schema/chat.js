@@ -1,15 +1,18 @@
 import mongoose from "mongoose";
-
+import { messageSchema } from "./message";
+import { userSchema } from "../../users/schema";
 const { model, Schema } = mongoose;
 
 const chatSchema = new Schema({
   members: {
-    type: mongoose.Types.ObjectId,
-    ref: "user",
+    type: [userSchema],
+    required: true,
+    default: [],
   },
   history: {
-    type: mongoose.Types.ObjectId,
-    ref: "message",
+    type: [messageSchema],
+    required: true,
+    default: [],
   },
 });
 

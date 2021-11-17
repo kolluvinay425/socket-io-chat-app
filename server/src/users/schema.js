@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 const { model, Schema } = mongoose;
 
-const userSchema = new Schema({
+export const userSchema = new Schema({
   username: {
     type: String,
     required: true,
