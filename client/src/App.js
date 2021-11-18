@@ -4,6 +4,8 @@ import io from "socket.io-client";
 import { FormControl, Button } from "react-bootstrap";
 import { useState } from "react";
 import Chat from "./components/Chat";
+import Register from "./components/Register";
+import Login from "./components/login";
 const socket = io.connect("http://localhost:3001");
 function App() {
   const [username, setUsername] = useState("");
@@ -37,6 +39,10 @@ function App() {
               ></FormControl>
               <Button onClick={joinRoom}>join room</Button>
             </div>
+            <h3>register</h3>
+            <Register />
+            <h3>login</h3>
+            <Login />
           </div>
           <div className="col-md-8">
             <Chat socket={socket} username={username} room={room} />

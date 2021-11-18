@@ -63,7 +63,7 @@ io.on("connection", (socket) => {
   });
 
   //create room, add new room to database
-  socket.on("createRoom", async ({ roomName, userIds }) => {
+  socket.on("createRoom", async ({ roomName, userId }) => {
     try {
       const newRoom = new chatModel({
         roomName,
